@@ -67,6 +67,6 @@ someinternalhost_IP = 10.132.0.4
 ---
 Параметры для подключения:
 ```
-testapp_IP = 35.198.167.169
+testapp_IP = 34.76.234.247
 testapp_port = 9292
 ```

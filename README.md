@@ -41,3 +41,32 @@ AV86github Infra repository
 bastion_IP = 35.228.57.138
 someinternalhost_IP = 10.132.0.4
 ```
+
+Лекция 6. Домашнее задание
+==========================
+ В рамках домашнего задания создавался инстанс, правило VPN через утилиту gcloud.
+ Доополнительно сделан простейший startup-script (без проверок, только команды).
+
+ 1. Создание инстанса со стартап скриптом:
+
+    ```
+    startup-script example:
+      gcloud compute instances create reddit-app\
+      --metadata-from-file startup-script=start-up-script.sh \
+      --boot-disk-size=10GB \
+      --image-family ubuntu-1604-lts \
+      --image-project=ubuntu-os-cloud \
+      --machine-type=g1-small \
+      --tags puma-server \
+      --restart-on-failure
+    ```
+1. Создание правила VPN:
+    ```
+    gcloud compute --project=infra-273514 firewall-rules create default-puma-serever --description="enable port 9292 for puma server" --direction=INGRESS --priority=1000 --network=default --action=ALLOW --rules=tcp:9292 --source-ranges=0.0.0.0/0 --target-tags=puma-server
+    ```
+---
+Параметры для подключения:
+```
+testapp_IP = 35.198.167.169
+testapp_port = 9292
+```

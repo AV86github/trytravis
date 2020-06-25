@@ -1,0 +1,12 @@
+[Unit]
+Description=Puma server
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/gcp/reddit
+ExecStart=/usr/local/bin/puma -b tcp://0.0.0.0:9292
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

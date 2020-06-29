@@ -67,6 +67,35 @@ someinternalhost_IP = 10.132.0.4
 ---
 Параметры для подключения:
 ```
-testapp_IP = 34.76.234.247
+testapp_IP = 34.107.69.196
 testapp_port = 9292
-```
+
+Лекция 7. Домашнее задание
+==========================
+
+В рамках домашнего задания создавались образы для VM в GCP c помощью утилиты **packer**.
+
+1. Создан базовый образ reddit-base. Перед запуском конфигурационный файл ubuntu16.json провалидирован (в репозиторий закоммичен пример файла с переменными - *variables.json.example*).
+    ```
+    packer validate -var-file variables.json ./ubuntu16.json
+    packer build -var-file variables.json ./ubuntu16.json
+    ```
+
+2. Для выполнения омашнего задания со звездочкой, на основе базового образа создан образ reddit-full. Конфигурация описана в файле **immutable.json**
+    ```
+    packer build -var 'project_id=PR_ID' immutable.json
+    ```
+
+3. Для запуска инстанса VM на основе созданного образа можно воспользоваться командой (после запуска сразу же доступен вебсервер):
+    ```
+    gcloud compute instances create reddit-full \
+      --zone=europe-west3-c \
+      --machine-type=g1-small \
+      --subnet=default \
+      --tags=puma-server \
+      --image=reddit-full-1593076989 \
+      --image-project=infra-273514 \
+      --boot-disk-device-name=reddit-full \
+      --reservation-affinity=any \
+      --restart-on-failure
+    ```

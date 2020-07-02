@@ -20,7 +20,7 @@ provider "google" {
 
 resource "google_compute_project_metadata" "project_ssh_users" {
   metadata = {
-  	"ssh-keys"   = "appuser2:${file(var.public_key_path)}appuser3:${file(var.public_key_path)}"
+  	"ssh-keys"   = "gcp:${file(var.public_key_path)}"
   }
 }
 
@@ -43,7 +43,9 @@ resource "google_compute_instance" "app" {
 
   network_interface {
     network = "default"
-    access_config {}
+    access_config {
+      nat_ip = google_compute_address.app_ip.address
+    }
   }
 
   # Provisioners connection
@@ -81,4 +83,21 @@ resource "google_compute_firewall" "firewall_puma" {
   source_ranges = ["0.0.0.0/0"]
   # Правило применимо для инстансов с перечисленными тэгами
   target_tags = ["reddit-app"]
+}
+
+resource "google_compute_firewall" "firewall_ssh" {
+  name = "default-allow-ssh"
+  network = "default"
+  description = "Default allow ssh connections"
+
+  allow {
+    protocol = "tcp"
+    ports = ["22"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+}
+
+resource "google_compute_address" "app_ip" {
+  name = "reddit-app-ip"
 }

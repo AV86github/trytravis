@@ -19,6 +19,8 @@ resource "google_compute_instance" "app" {
 
 resource "null_resource" "app" {
 
+  count = var.enable_provisioners ? 1 : 0
+
   triggers = {
     cluster_instance_ids = "${join(",", google_compute_instance.app.*.id)}"
   }

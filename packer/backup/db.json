@@ -8,13 +8,13 @@
         {
             "type": "googlecompute",
             "project_id": "{{ user `project_id` }}",
-            "image_name": "reddit-app-base-{{timestamp}}",
-            "image_family": "reddit-app-base",
+            "image_name": "reddit-db-base-{{timestamp}}",
+            "image_family": "reddit-db-base",
             "source_image_family": "{{ user `source_image_family` }}",
             "zone": "europe-west1-b",
             "ssh_username": "gcp",
             "machine_type": "{{ user `machine_type` }}",
-            "image_description": "Image with istalled puma server",
+            "image_description": "Image with installed MongoDB",
             "disk_type": "pd-standard",
             "disk_size": 10,
             "network": "default",
@@ -23,8 +23,9 @@
     ],
     "provisioners": [
         {
-            "type": "ansible",
-            "playbook_file": "ansible/packer_app.yml"
+            "type": "shell",
+            "script": "scripts/install_mongodb.sh",
+            "execute_command": "sudo {{.Path}}"
         }
     ]
 }

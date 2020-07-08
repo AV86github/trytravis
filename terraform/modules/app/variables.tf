@@ -18,3 +18,8 @@ variable app_disk_image {
 variable provisioner_ssh_key {
   description = "Path to ssh key for VM"
 }
+
+variable enable_provisioners {
+  description = "false (default) - disable provisioning, true - enable"
+  default = false
+}

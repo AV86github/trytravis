@@ -4,7 +4,7 @@ language: bash
 env:
   - PACKER_VARIABLES: packer/variables.json.example
 before_install:
-# install dependencies
+# install all dependencies
 - sudo apt-get install unzip
 - curl -O https://releases.hashicorp.com/terraform/0.12.28/terraform_0.12.28_linux_amd64.zip
 - sudo unzip terraform_0.12.28_linux_amd64.zip -d /usr/local/bin

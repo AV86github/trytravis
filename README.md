@@ -1,6 +1,8 @@
 # AV86github_infra
 AV86github Infra repository
 
+[![Build Status](https://travis-ci.com/Otus-DevOps-2020-02/AV86github_infra.svg?branch=master)](https://travis-ci.com/Otus-DevOps-2020-02/AV86github_infra)
+
 Лекция 5. Домашнее задание
 ==========================
 
